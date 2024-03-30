@@ -5,7 +5,7 @@ export const ErrorPage = () => {
 	const error = useRouteError();
 	console.error(error);
 	return (
-		<div>
+		<div className='h-screen flex items-center justify-center text-center'>
 			<h1>Oops!</h1>
 			<p>Sorry, an unexpected error has occurred.</p>
 		</div>
