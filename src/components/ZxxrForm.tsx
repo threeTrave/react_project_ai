@@ -124,22 +124,14 @@ export const ZxxrFormItem = ({ prop, addField, _rules: rules, model, children, c
 	}, [])
 	return (
 		<div className={className} onBlur={() => validate('blur')} onChange={() => validate('change')}>
-			{children}
+			<div className="relative inline-block">
+				{children}
+				<span className={(validateState === 'error' ? '' : 'hidden ') + 'absolute left-0 top-full'}>
+					{validateMessage}
+				</span>
+			</div>
 		</div>
 	)
-}
-export const useZxxrState = initState => {
-	const myRef = useRef(initState)
-	const [myState, setMyState] = useState(initState)
-	const setState = newState => {
-		setMyState(newState)
-		if (newState instanceof Function) {
-			myRef.current = newState()
-		} else {
-			myRef.current = newState
-		}
-	}
-	return [myRef, myState, setState]
 }
 /**
  * 确保返回是数组
