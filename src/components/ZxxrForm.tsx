@@ -20,18 +20,16 @@ enum ValidateState {
 
 export const ZxxrForm = ({ children, rules, className }: ZxxrFormProps) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		console.log('on Submit')
 		e.preventDefault()
 	}
 	return (
 		<form className={className} onSubmit={handleSubmit}>
-			{Object.keys(rules).map(key => (
-				<ZxxrForm.Input rulesKey={key} key={key} />
-			))}
 			{React.Children.map(children, child => {
 				if (child !== undefined && child.type.displayName === 'ZxxrForm.Input') {
 					child.props.rule = rules[child.props.rulesKey]
-					return child
 				}
+				return child
 			})}
 		</form>
 	)
@@ -59,7 +57,7 @@ ZxxrForm.Input = ({ rulesKey, rule, className }: ZxxrFormInputProps) => {
 		console.log(rulesKey + ':' + 'ok')
 	}
 	const validate = async (trigger: string) => {
-		console.log('validate : ' + trigger)
+		// console.log('validate : ' + trigger)
 		try {
 			doValidate()
 			onValidationSucceeded()
@@ -88,21 +86,7 @@ type ZxxrFormLabelProps = {
 ZxxrForm.Label = ({ message }: ZxxrFormLabelProps) => {
 	return <span className={'absolute left-0 top-full'}>{message}</span>
 }
-// /**
-//  * 确保返回是数组
-//  */
-// const ensureArr = arr => {
-// 	if (Array.isArray(arr)) return arr
-// 	if (!arr) return []
-// 	return [arr]
-// }
-// /**
-//  *  取prop交集
-//  * @param fields
-//  * @param props
-//  * @returns
-//  */
-// const filterFields = (fields, props) => {
-// 	const normalized = ensureArr(props)
-// 	return normalized.length > 0 ? fields.filter(field => field.prop && normalized.includes(field.prop)) : fields
-// }
+
+ZxxrForm.Submit = () => {
+	return <input className='border-2 border-black' type='submit' value={'提交'}></input>
+}
