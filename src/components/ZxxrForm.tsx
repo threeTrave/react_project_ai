@@ -23,6 +23,7 @@ enum ValidateState {
 
 export const ZxxrForm = ({ children, rules, className, model }: ZxxrFormProps) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		console.log('on Submit')
 		e.preventDefault()
 	}
 	return (
@@ -39,6 +40,7 @@ export const ZxxrForm = ({ children, rules, className, model }: ZxxrFormProps) =
 					// child.props.rule = rules[child.props.rulesKey]
 					// return child
 				}
+				return child
 			})}
 		</form>
 	)
@@ -65,7 +67,9 @@ ZxxrForm.Input = ({ rulesKey, rule, className, children, model }: ZxxrFormInputP
 		setValidateState(ValidateState.Success)
 		// console.log(rulesKey + ':' + 'ok')
 	}
+
 	const validate = async () => {
+
 		// console.log('validate : ' + trigger)
 		try {
 			await doValidate()
@@ -109,6 +113,7 @@ type ZxxrFormLabelProps = {
 ZxxrForm.Label = ({ message }: ZxxrFormLabelProps) => {
 	return <span className={'absolute left-0 top-full'}>{message}</span>
 }
+
 // /**
 //  * 确保返回是数组
 //  */
