@@ -18,7 +18,7 @@ enum ValidateState {
 	NotValidate,
 	Error,
 	Validating,
-	Success,
+	Success
 }
 
 export const ZxxrForm = ({ children, rules, className, model }: ZxxrFormProps) => {
@@ -28,17 +28,9 @@ export const ZxxrForm = ({ children, rules, className, model }: ZxxrFormProps) =
 	}
 	return (
 		<form className={className} onSubmit={handleSubmit}>
-			{/* {Object.keys(rules).map(key => (
-				<ZxxrForm.Input rulesKey={key} key={key} rule={rules[key]} />
-			))} */}
-
 			{React.Children.map(children, child => {
-				// && child.type.displayName === 'ZxxrForm.Input'
 				if (child !== undefined && child.props.rulesKey) {
-					// child.props.key = child.props.rulesKey
 					return React.cloneElement(child, { key: child.props.rulesKey, rule: rules[child.props.rulesKey], model })
-					// child.props.rule = rules[child.props.rulesKey]
-					// return child
 				}
 				return child
 			})}
@@ -46,11 +38,10 @@ export const ZxxrForm = ({ children, rules, className, model }: ZxxrFormProps) =
 	)
 }
 
-ZxxrForm.Input = ({ rulesKey, rule, className, children, model }: ZxxrFormInputProps) => {
+ZxxrForm.Item = ({ rulesKey, rule, className, children, model }: ZxxrFormInputProps) => {
 	const [validateState, setValidateState] = useState(ValidateState.NotValidate)
 	const [validateMessage, setValidateMessage] = useState('')
 	const initState = useRef<boolean>(true)
-	// const [inputValue, setInputValue] = useState('')
 	const doValidate = async () => {
 		if (rule !== undefined && model !== undefined && rulesKey !== undefined) {
 			const validator = new Schema({ rulesKey: rule })
@@ -69,7 +60,6 @@ ZxxrForm.Input = ({ rulesKey, rule, className, children, model }: ZxxrFormInputP
 	}
 
 	const validate = async () => {
-
 		// console.log('validate : ' + trigger)
 		try {
 			await doValidate()
@@ -98,7 +88,7 @@ ZxxrForm.Input = ({ rulesKey, rule, className, children, model }: ZxxrFormInputP
 	// }
 	return (
 		<div className={className + ' mb-5'}>
-			<div className="relative inline-block">
+			<div className='relative inline-block'>
 				{children}
 				{validateState === ValidateState.Error ? <ZxxrForm.Label message={validateMessage} /> : <></>}
 			</div>
