@@ -36,7 +36,7 @@ const SignedContent = () => {
 			<p>个人中心</p>
 			{contentList.map(item => {
 				return (
-					<div className='flex flex-row items-center'>
+					<div key={item.key} className='flex flex-row items-center'>
 						<p>{item.title}</p>
 						<p>:</p>
 						<p>{item.key}</p>
